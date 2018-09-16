@@ -26,7 +26,21 @@ class BurgerBuilder extends Component {
             cheese: 0,
             meat: 0
         },
-        totalPrice: 4
+        totalPrice: 4,
+        purchaseable: false
+    }
+
+    //using the incredients from the addingredienthandler/remove
+    updatePurchaseState (ingredients) {
+
+        const sum = Object.keys(ingredients)
+        .map(igKey => {
+            return ingredients[igKey]
+        })
+        .reduce((sum,el) => {
+            return sum + el;
+        },0);
+        this.setState({purchaseable: sum > 0});
     }
     //methods
     // state should be updated in an immutable way, basically don't touch the original state
@@ -41,9 +55,7 @@ class BurgerBuilder extends Component {
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice + priceAddition;
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
-
-
-
+        this.updatePurchaseState(updatedIngredients);
     }
     removeIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
@@ -59,6 +71,7 @@ class BurgerBuilder extends Component {
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice - priceDeduction;
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
+        this.updatePurchaseState(updatedIngredients);
 
     }
 
@@ -79,6 +92,7 @@ class BurgerBuilder extends Component {
                     ingredientAdded = {this.addIngredientHandler}
                     ingredientRemoved = {this.removeIngredientHandler}
                     disabled = {disabledInfo}
+                    purchaseable = {this.state.purchaseable}
                     price = {this.state.totalPrice}
                     />
             </Aux>
