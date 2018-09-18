@@ -29,7 +29,8 @@ class BurgerBuilder extends Component {
             meat: 0
         },
         totalPrice: 4,
-        purchaseable: false
+        purchaseable: false,
+        purchasing: false
     }
 
     //using the incredients from the addingredient
@@ -59,6 +60,8 @@ class BurgerBuilder extends Component {
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
         this.updatePurchaseState(updatedIngredients);
     }
+
+    //method set up like properties
     removeIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
         if (oldCount <=0){
@@ -77,6 +80,24 @@ class BurgerBuilder extends Component {
 
     }
 
+    //this cannot be used in this way - used same method syntax as render - but this syntax will not work correctly when you use this keyword bc this method is triggered through a key event
+    //purchaseHandler () {
+    //    this.setState({purchasing:true});
+    //}
+
+     purchaseHandler = () => {
+        this.setState({purchasing:true});
+    }
+
+    purchaseCancelHandler = () => {
+        this.setState({purchasing: false});
+    }
+
+    purchaseContinueHandler = () =>{
+        alert('You continue!');
+
+    }
+
 
     render (){
         const disabledInfo = {
@@ -86,11 +107,16 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0 
         }
         //{salad: true, meat: false, ...}
+        // these things that go into each OrderSummary, Burger etc are properties
 
         return (
             <Aux>
-                <Modal>
-                    <OrderSummary ingredients = {this.state.ingredients}/>
+                <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+                    <OrderSummary 
+                    ingredients = {this.state.ingredients}
+                    purchaseCanceled = {this.purchaseCancelHandler}
+                    purchaseContinued = {this.purchaseContinueHandler}
+                    />
                 </Modal>
                 <Burger ingredients = {this.state.ingredients}/>
                 <BuildControls
@@ -98,6 +124,7 @@ class BurgerBuilder extends Component {
                     ingredientRemoved = {this.removeIngredientHandler}
                     disabled = {disabledInfo}
                     purchaseable = {this.state.purchaseable}
+                    ordered={this.purchaseHandler}
                     price = {this.state.totalPrice}
                     />
             </Aux>
