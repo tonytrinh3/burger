@@ -17,3 +17,10 @@
     height: 100%;
     
 }
+
+/*i don't get why you can reuse css names. maybe bc those css names are specific to that js file in that folder*/
+
+.Logo{
+    height: 80%;
+
+}
