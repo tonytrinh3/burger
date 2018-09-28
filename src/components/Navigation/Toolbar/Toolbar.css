@@ -24,3 +24,10 @@
     height: 80%;
 
 }
+/*if we are on a mobile device */
+@media (max-width: 499px){
+    .DesktopOnly{
+        display: none;
+    }
+
+}
