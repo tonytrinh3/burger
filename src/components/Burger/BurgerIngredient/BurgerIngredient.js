@@ -43,7 +43,7 @@ class BurgerIngredient extends Component {
         return ingredient;
     }
 }
-
+/*prop validation is good to use when you are using with team, other people, 3rd party  */
 BurgerIngredient.propTypes = {
     type:PropTypes.string.isRequired
 
