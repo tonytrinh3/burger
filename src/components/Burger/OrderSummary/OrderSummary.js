@@ -7,6 +7,7 @@ import Button from '../../UI/Button/Button'
 //wanna add lifecycle hooks so you can see when it is updated
 
 class OrderSummary extends Component {
+        //this could be a function component, doesn't have to be class'
     componentWillUpdate(){
         console.log('[OrderSummary] WillUpdate');
     }
